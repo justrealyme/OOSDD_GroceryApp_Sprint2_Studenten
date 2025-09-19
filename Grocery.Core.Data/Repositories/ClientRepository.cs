@@ -1,6 +1,6 @@
-﻿
-using Grocery.Core.Interfaces.Repositories;
+﻿using Grocery.Core.Interfaces.Repositories;
 using Grocery.Core.Models;
+using System.Linq;
 
 namespace Grocery.Core.Data.Repositories
 {
@@ -17,9 +17,14 @@ namespace Grocery.Core.Data.Repositories
             ];
         }
 
+        public Client? GetByEmail(string email)
+        {
+            return clientList.FirstOrDefault(c => c.EmailAddress == email);
+        }
+
         public Client? Get(string email)
         {
-            return clientList[0];
+            return GetByEmail(email);
         }
 
         public Client? Get(int id)
