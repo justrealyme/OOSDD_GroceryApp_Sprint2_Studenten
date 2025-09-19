@@ -5,9 +5,15 @@
              xmlns:vm="clr-namespace:Grocery.App.ViewModels"
              xmlns:m="clr-namespace:Grocery.Core.Models;assembly=Grocery.Core"
              Title="GroceryListsView">
+
     <Shell.TitleView>
         <Grid>
-            <Label Text="Boodschappenlijsten" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="Boodschappenlijsten" FontSize="Large" HorizontalOptions="Center" />
+                <!-- Voeg deze regel toe voor de welcome message -->
+                <Label Text="{Binding WelcomeMessage}" FontSize="Small" HorizontalOptions="Center" 
+                       TextColor="#666" Margin="0,5,0,0" />
+            </StackLayout>
         </Grid>
     </Shell.TitleView>
 

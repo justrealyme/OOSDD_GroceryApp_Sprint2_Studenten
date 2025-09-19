@@ -10,11 +10,16 @@ namespace Grocery.App.ViewModels
     {
         public ObservableCollection<GroceryList> GroceryLists { get; set; }
         private readonly IGroceryListService _groceryListService;
+        private readonly GlobalViewModel _globalViewModel;
 
-        public GroceryListViewModel(IGroceryListService groceryListService) 
+        [ObservableProperty]
+        string welcomeMessage = "";
+
+        public GroceryListViewModel(IGroceryListService groceryListService, GlobalViewModel globalViewModel)
         {
             Title = "Boodschappenlijst";
             _groceryListService = groceryListService;
+            _globalViewModel = globalViewModel; // Voeg deze dependency toe
             GroceryLists = new(_groceryListService.GetAll());
         }
 
@@ -24,9 +29,17 @@ namespace Grocery.App.ViewModels
             Dictionary<string, object> paramater = new() { { nameof(GroceryList), groceryList } };
             await Shell.Current.GoToAsync($"{nameof(Views.GroceryListItemsView)}?Titel={groceryList.Name}", true, paramater);
         }
+
         public override void OnAppearing()
         {
             base.OnAppearing();
+
+            // Update welcome message met gebruikersnaam
+            if (_globalViewModel?.Client != null)
+            {
+                WelcomeMessage = $"Welkom, {_globalViewModel.Client.Name}!";
+            }
+
             GroceryLists = new(_groceryListService.GetAll());
         }
 
